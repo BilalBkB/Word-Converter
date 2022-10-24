@@ -11,11 +11,10 @@ if (DEFINED TEST)
 
 else()
 
-    #add_subdirectory(Window)
-
     set(SOURCE 
         ${SOURCE}
         ${CD_L}/main.cpp
+        ${CD_L}/number.cpp
         PARENT_SCOPE
     )
 

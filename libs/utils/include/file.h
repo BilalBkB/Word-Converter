@@ -26,20 +26,20 @@ public:
         APPEND      // Append to file, and create if not exist
     };
 
-    File(const str fileName);
+    File(const str &fileName);
     ~File();
 
-    const str fileName();
+    const str &fileName();
     const FILE* filePtr();
 
     bool open(const Option option = READ);
     bool close();
 
     str readFile();
-    bool writeFile(const str message);
+    bool writeFile(const str &message);
 
-    static str readFile(const str fileName);
-    static bool writeFile(const str fileName, const str message);
+    static str ReadFile(const str &fileName);
+    static bool WriteFile(const str &fileName, const str &message);
 
 private:
     FILE *file;

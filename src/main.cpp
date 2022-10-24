@@ -10,10 +10,70 @@
 
 #include "str.h"
 #include "file.h"
+#include "number.h"
+#include "string_list.h"
 
-str TranslateStrToDigits(const str message)
+str TranslateStrToDigits(const str &message)
 {
-    return message;
+    StringList replaced;// = message;
+
+    StringList sentences = message.split('.');
+
+    bool is_numeric;
+    str* to_replace;
+    StringList words;
+    str* word;
+    StringList wordsResult;
+    str digitText;
+    str append_characters;
+    while (sentences.size())
+    {
+        to_replace = sentences.removeAt(0);
+
+        words = to_replace->split(' ');
+        delete to_replace;
+        
+        while (words.size())
+        {
+            word = words.removeAt(0);
+            is_numeric = Number::isNumericText(*word);
+            if (is_numeric)
+            {
+                digitText = str("%s %s", digitText, *word);
+            }
+            else if (*word != '\n' && *word != '\t')
+            {
+                if(!digitText.isEmpty())
+                {
+                    wordsResult.insert(new str(Number::ToDigits(digitText.trim())));
+                    digitText = str();
+                }
+                
+                if (!append_characters.isEmpty())
+                {
+                    wordsResult.insert(new str(append_characters.trim()));
+                    append_characters = str();
+                }
+                wordsResult.insert(new str(*word));
+            }
+            else
+            {
+                append_characters = str("%s %s", append_characters, *word);
+            }
+            delete word;
+        }
+
+        replaced.insert(new str(wordsResult.join(' ')));
+        wordsResult.clean();
+    }
+
+    str result = replaced.join('.');
+    replaced.clean();
+    sentences.clean();
+    wordsResult.clean();
+    words.clean();
+
+    return result;
 }
 
 int main(int argc, char* argv[])
@@ -64,10 +124,8 @@ int main(int argc, char* argv[])
                     if (!output_file.writeFile(translated))
                         status = 5;
                 }
-                else
-                {
-                    printf("%s", translated.c_str());
-                }
+                
+                printf("%s\n", translated.c_str());
             }
             input_file.close();
             output_file.close();

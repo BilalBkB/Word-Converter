@@ -39,24 +39,38 @@ public:
     str(const char *text);
     str(const char &character);
     str(const int &number);
+    str(const unsigned int &number);
     str(const float &number);
 
     str &operator=(const str &other);
     str &operator=(const char *text);
     str &operator=(const char &character);
 
-    bool operator==(const str &other);
-    bool operator!=(const str &other);
+    bool operator==(const str &other) const;
+    bool operator!=(const str &other) const;
+    bool operator<(const str &other) const;
+    bool operator>(const str &other) const;
+
+    template <typename Arg>
+    const Arg& Argument(const Arg &arg)
+    {
+        return arg;
+    }
+
+    const char* Argument(const str &arg)
+    {
+        return arg.c_str();
+    }
 
     template <typename... Args>
     str(const char *format, Args... args)
     {
-        size_t length = snprintf(nullptr, 0, format, args...);
+        size_t length = snprintf(nullptr, 0, format, Argument(args)...);
         if (length < 0)
             return;
 
         textS = (char *)malloc(length + 1);
-        snprintf(textS, length + 1, format, args...);
+        snprintf(textS, length + 1, format, Argument(args)...);
         textS[length] = '\0';
     }
 

@@ -86,7 +86,6 @@ public:
     {
         return list_.indexOf((void *)value);
     }
-    //T value(int pos) { return *(at(pos)); }
 
     T *removeAt(int pos)
     {

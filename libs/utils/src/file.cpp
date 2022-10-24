@@ -1,6 +1,16 @@
+/**
+**********************************************************************************************************************************************************************************************************************************
+* @file:	str.cpp
+* @author:	Bilal Ben khali Bumedien
+* @email:	bilalbenkhalibumedien@gmail.com
+* @date:	24/10/2022 00:31:50
+* @brief:	Class File
+**********************************************************************************************************************************************************************************************************************************
+**/
+
 #include "file.h"
 
-File::File(const str fileName) : 
+File::File(const str &fileName) : 
     file_name(fileName), file(nullptr), opened(false)
 {
 }
@@ -10,7 +20,7 @@ File::~File()
     close();
 }
 
-const str File::fileName()
+const str &File::fileName()
 {
     return file_name;
 }
@@ -91,7 +101,7 @@ str File::readFile()
     return result;
 }
 
-bool File::writeFile(const str message)
+bool File::writeFile(const str &message)
 {
     if(!open(WRITE))
         return false;
@@ -105,14 +115,14 @@ bool File::writeFile(const str message)
     return true;
 }
 
-str File::readFile(const str fileName)
+str File::ReadFile(const str &fileName)
 {
     File file_to_read(fileName);
 
     return file_to_read.readFile();
 }
 
-bool File::writeFile(const str fileName, const str message)
+bool File::WriteFile(const str &fileName, const str &message)
 {
     File file_to_write(fileName);
 

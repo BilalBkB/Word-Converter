@@ -48,6 +48,11 @@ str::str(const int &number)
     *this = str("%d", number);
 }
 
+str::str(const unsigned int &number)
+{
+    *this = str("%u", number);
+}
+
 str::str(const float &number)
 {
     *this = str("%f", number);
@@ -90,12 +95,11 @@ str &str::operator=(const char &character)
     return *this;
 }
 
-bool str::operator==(const str &other)
+bool str::operator==(const str &other) const
 {
     if (length() != other.length())
         return false;
 
-    bool equal;
     for (int i = 0; i < length(); i++)
         if (textS[i] != other.textS[i])
             return false;
@@ -103,9 +107,27 @@ bool str::operator==(const str &other)
     return true;
 }
 
-bool str::operator!=(const str &other)
+bool str::operator!=(const str &other) const
 {
     return !(*this == other);
+}
+
+bool str::operator<(const str &other) const
+{
+    int i;
+    for (i = 0; i < length() && i < other.length(); i++)
+        if (textS[i] > other.textS[i])
+            return false;
+
+    if (i >= length() && i < other.length())
+        return false;
+
+    return true;
+}
+
+bool str::operator>(const str &other) const
+{
+    return !(*this > other);
 }
 
 size_t str::length(const char *text)
@@ -264,18 +286,20 @@ StringList str::split(const char &delimiter) const
     for (int i = 0; i < size; i++)
     {
         if (delimiter != textS[i])
-            text->append(textS[i]);
+        {
+            *text = text->append(textS[i]);
+        }
         else
         {
             list.insert(text);
-            delete text;
             text = new str();
         }
     }
+
     if (text->length() > 0)
         list.insert(text);
-
-    delete text;
+    else
+        delete text;
 
     return list;
 }
