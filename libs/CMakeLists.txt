@@ -78,8 +78,6 @@ target_link_libraries(
     LIST
 )
 
-file(MAKE_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/logs)
-
 ## Set variables to project ##
 
 set(INCLUDE_LIBS
