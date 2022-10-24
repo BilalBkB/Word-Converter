@@ -55,6 +55,7 @@ Number::Number(const str &text)
         digits = 0;
 }
 
+// TODO: check incorrect secuence number of texts (for example: "one one one")
 unsigned int Number::ToDigits(const str &text)
 {
     unsigned int result = 0;
