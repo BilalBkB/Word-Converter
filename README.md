@@ -11,6 +11,7 @@ To compile the solution you can use the scripts generated for linux and windows 
 
 CMake Version 3 or higher
 Compiler g++ with c++ version 14 or higher.
+MinGW for windows
 
 ### Build Solution
 #### Linux
@@ -23,7 +24,7 @@ Use the script '_build.sh [-r]_' to build solution, you can rebuild this with ar
 
 Use the script '_build.bat [-r]_' to build solution, you can rebuild this with argument '_-r_'.
   ```sh
-  build.bat
+  .\build.bat
   ```
 
 ### Usage
